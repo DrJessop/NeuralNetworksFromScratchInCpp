@@ -5,8 +5,8 @@ using std::array;
 using std::cout, std::endl;
 
 template <size_t nr, size_t nc, typename T>
-array<array<T, nc>, nr> create_matrix(int start) {
-    array<array<T, nc>, nr> matrix;
+matrix<nr, nc, T>create_matrix(int start) {
+    matrix<nr, nc, T> matrix;
 
     // Arange population
     // 2x2
@@ -24,7 +24,7 @@ array<array<T, nc>, nr> create_matrix(int start) {
 }
 
 template <size_t nr, size_t nc, typename T>
-void print_matrix(const array<array<T, nc>, nr>& matrix) {
+void print_matrix(const matrix<nr, nc, T>& matrix) {
     for (int r = 0; r < nr; r++) {
         for (int c = 0; c < nc; c++) {
             cout << matrix[r][c] << ", ";
