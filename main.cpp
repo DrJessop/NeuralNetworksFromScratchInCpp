@@ -8,8 +8,15 @@ int main() {
     print_matrix(matrix);
 
     // Naive matrix multiplication
+    auto A = create_matrix<2, 2, int>(0);
+    auto B = create_matrix<2, 2, int>(0);
+    auto C = naive_matmul(A, B);
+
+    print_matrix(C);
+
+
+    // Optimizing matrix multiplication
 
     // Separating the bias from matrix multiplication
 
-    // Optimizing matrix multiplication + bias
 }
