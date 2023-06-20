@@ -48,3 +48,37 @@ matrix<nr, nc, T> naive_matmul(const matrix<nr, inner, T>& A, const matrix<inner
 
     return result;
 }
+
+template <size_t nr, size_t nc, typename T>
+matrix<nc, nr, T> transpose(const matrix<nr, nc, T>& matrix) {
+    ::matrix<nc, nr, T> result;
+
+    for (size_t r = 0; r < nr; r++) {
+        for (size_t c = 0; c < nc; c++) {
+            result[c][r] = matrix[r][c];
+        }
+    }
+
+    return result;
+}
+
+template <size_t nr, size_t inner, size_t nc, typename T>
+matrix<nr, nc, T> matmul(const matrix<nr, inner, T>& A, const matrix<nc, inner, T>& B) {
+    matrix<nr, nc, T> result = {};
+
+    for (size_t r = 0; r < nr; r++) {
+        const auto& A_row = A[r];
+        auto& result_row = result[r];
+        for (size_t c = 0; c < nc; c++) {
+            const auto& B_col = B[c];
+
+            T accum = 0;
+            for (size_t i = 0; i < inner; i++) {
+                accum += A_row[i] * B_col[i];
+            }
+            result_row[c] = accum;
+        }
+    }
+
+    return result;
+}

@@ -14,4 +14,10 @@ void print_matrix(const matrix<nr, nc, T>& matrix);
 template <size_t nr, size_t inner, size_t nc, typename T>
 matrix<nr, nc, T> naive_matmul(const matrix<nr, inner, T>& A, const matrix<inner, nc, T>& B);
 
+template <size_t nr, size_t nc, typename T>
+matrix<nc, nr, T> transpose(const matrix<nr, nc, T>& matrix);
+
+template <size_t nr, size_t inner, size_t nc, typename T>
+matrix<nr, nc, T> matmul(const matrix<nr, inner, T>& A, const matrix<nc, inner, T>& B);
+
 #include "nn.tpp"
