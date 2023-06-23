@@ -5,8 +5,14 @@ using std::array;
 template <size_t nr, size_t nc, typename T>
 using matrix = array<array<T, nc>, nr>;
 
+template <size_t nc, typename T>
+using bias = array<T, nc>;
+
 template <size_t nr, size_t nc, typename T>
 matrix<nr, nc, T> create_matrix(int start);
+
+template <size_t nc, typename T>
+bias<nc, T> create_bias(int start);
 
 template <size_t nr, size_t nc, typename T>
 void print_matrix(const matrix<nr, nc, T>& matrix);
@@ -19,5 +25,8 @@ matrix<nc, nr, T> transpose(const matrix<nr, nc, T>& matrix);
 
 template <size_t nr, size_t inner, size_t nc, typename T>
 matrix<nr, nc, T> matmul(const matrix<nr, inner, T>& A, const matrix<nc, inner, T>& B);
+
+template <size_t nr, size_t inner, size_t nc, typename T>
+matrix<nr, nc, T> matmul_plus_bias(const matrix<nr, inner, T>& A, const matrix<nc, inner, T>& B, const bias<nc, T>& bias);
 
 #include "nn.tpp"

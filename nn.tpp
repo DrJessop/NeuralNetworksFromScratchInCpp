@@ -23,6 +23,25 @@ matrix<nr, nc, T> create_matrix(int start) {
     return mat;
 }
 
+template <size_t nc, typename T>
+bias<nc, T> create_bias(int start) {
+    bias<nc, T> b;
+
+    // Arange population
+    // 2x2
+    // [[start, start + 1],
+    //  [start + 2, start + 3]]
+    int val = start;
+    
+    for (int c = 0; c < nc; c++) {
+        b[c] = val;
+        val++;
+    }
+    
+
+    return b;
+}
+
 template <size_t nr, size_t nc, typename T>
 void print_matrix(const matrix<nr, nc, T>& matrix) {
     for (int r = 0; r < nr; r++) {
@@ -82,3 +101,29 @@ matrix<nr, nc, T> matmul(const matrix<nr, inner, T>& A, const matrix<nc, inner, 
 
     return result;
 }
+
+template <size_t nr, size_t inner, size_t nc, typename T>
+matrix<nr, nc, T> matmul_plus_bias(const matrix<nr, inner, T>& A, const matrix<nc, inner, T>& B, const bias<nc, T>& b) {
+    matrix<nr, nc, T> result = {};
+
+    for (size_t r = 0; r < nr; r++) {
+        const auto& A_row = A[r];
+        auto& result_row = result[r];
+        for (size_t c = 0; c < nc; c++) {
+            const auto& B_col = B[c];
+
+            T accum = 0;
+            for (size_t i = 0; i < inner; i++) {
+                accum += A_row[i] * B_col[i];
+            }
+            result_row[c] = accum;
+        }
+
+        for (size_t c = 0; c < nc; c++) {
+            result_row[c] += b[c];
+        }
+    }
+
+    return result;
+}
+
